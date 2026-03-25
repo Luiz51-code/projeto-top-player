@@ -21,7 +21,12 @@ export async function buscarPorId(req, res) {
             [id]
         );
 
-        res.json(player);
+        // ✅ ADICIONADO
+        if (player.length === 0) {
+            return res.status(404).json({ erro: "Player não encontrado" });
+        }
+
+        res.json(player[0]);
     } catch (erro) {
         console.error(erro);
         res.status(500).json({ erro: "Erro ao buscar player" });
@@ -56,10 +61,15 @@ export async function atualizar(req, res) {
         const { id } = req.params;
         const { nickname, plataforma } = req.body;
 
-        await db.conexao.query(
+        const [resultado] = await db.conexao.query(
             "UPDATE players SET nickname = ?, plataforma = ? WHERE id = ?",
             [nickname, plataforma, id]
         );
+
+        // ✅ ADICIONADO
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ erro: "Player não encontrado" });
+        }
 
         res.json({ id, nickname, plataforma });
 
@@ -74,10 +84,15 @@ export async function deletar(req, res) {
     try {
         const { id } = req.params;
 
-        await db.conexao.query(
+        const [resultado] = await db.conexao.query(
             "DELETE FROM players WHERE id = ?",
             [id]
         );
+
+        // ✅ ADICIONADO
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ erro: "Player não encontrado" });
+        }
 
         res.json({ mensagem: "Player deletado com sucesso" });
 
