@@ -80,7 +80,7 @@ export const deletar = async (req, res) => {
             return res.status(404).json({ msg: "Partida não encontrada" });
         }
 
-        res.json({ msg: "Deletado com sucesso" });
+        res.json({ msg: "Partida removida com sucesso" });
     } catch (erro) {
         console.error(erro);
         res.status(500).json({ msg: "Erro ao deletar partida" });

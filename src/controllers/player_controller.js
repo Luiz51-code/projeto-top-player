@@ -66,16 +66,21 @@ export async function atualizar(req, res) {
             [nickname, plataforma, id]
         );
 
-        // ✅ ADICIONADO
+        // Player não encontrado
         if (resultado.affectedRows === 0) {
             return res.status(404).json({ erro: "Player não encontrado" });
         }
 
-        res.json({ id, nickname, plataforma });
+        // ✅ Resposta no formato esperado pelo teste
+        return res.status(200).json({
+            mensagem: "Player atualizado com sucesso"
+        });
 
     } catch (erro) {
         console.error(erro);
-        res.status(500).json({ erro: "Erro ao atualizar player" });
+        return res.status(500).json({
+            erro: "Erro ao atualizar player"
+        });
     }
 }
 

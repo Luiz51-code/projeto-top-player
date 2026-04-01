@@ -109,7 +109,7 @@ export async function atualizar(req, res) {
             return res.status(404).json({ msg: "Usuario não encontrado" });
         }
 
-        return res.status(200).json({ msg: "Usuário atualizado" });
+        return res.status(200).json({ msg: "Usuário atualizado com sucesso" });
 
     } catch (erro) {
         console.error(erro);
@@ -127,7 +127,7 @@ export async function remover(req, res) {
             return res.status(404).json({ msg: "Usuario não encontrado" });
         }
 
-        return res.status(200).json({ msg: "Usuário removido" });
+        return res.status(200).json({ msg: "Usuário deletado com sucesso" });
 
     } catch (erro) {
         console.error(erro);
