@@ -53,11 +53,16 @@ export const criar = async (req, res) => {
 export const atualizar = async (req, res) => {
     try {
         const { id } = req.params;
-        const { jogo_id, player_id, pontos } = req.body;
+        const { jogo_id, player_id, pontos, data_partida } = req.body;
 
-        const [resultado] = await partidasModel.atualizar(id, jogo_id, player_id, pontos);
+        const [resultado] = await partidasModel.atualizar(
+            id,
+            jogo_id,
+            player_id,
+            pontos,
+            data_partida || new Date() // ✅ evita NULL
+        );
 
-        // ✅ ADICIONADO
         if (resultado.affectedRows === 0) {
             return res.status(404).json({ msg: "Partida não encontrada" });
         }
@@ -75,7 +80,6 @@ export const deletar = async (req, res) => {
 
         const [resultado] = await partidasModel.deletar(id);
 
-        // ✅ ADICIONADO
         if (resultado.affectedRows === 0) {
             return res.status(404).json({ msg: "Partida não encontrada" });
         }
